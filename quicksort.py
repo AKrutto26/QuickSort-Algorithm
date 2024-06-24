@@ -12,12 +12,13 @@ def partition(arr, low, high):
 
 def quicksort(arr, low, high):
     if low < high:
+
         pi = partition(arr, low, high)
 
         quicksort(arr, low, pi - 1)  # Recursively sort elements before partition
         quicksort(arr, pi + 1, high)  # Recursively sort elements after partition
 
 # Example usage
-arr = [2, 9, 8, 1, 6, 5, 4, 3, 7]
+arr = [4,7,1,0]
 quicksort(arr, 0, len(arr) - 1)
 print("Sorted array:", arr)
