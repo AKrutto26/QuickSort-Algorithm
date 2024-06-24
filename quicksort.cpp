@@ -28,8 +28,10 @@ void quickSort(vector<int>& arr, int low, int high) {
 }
 
 int main() {
+
     vector<int> arr = {2, 9, 8, 1, 6, 5, 4, 3, 7};
     int n = arr.size();
+    
     quickSort(arr, 0, n - 1);
     
     cout << "Sorted array: ";
