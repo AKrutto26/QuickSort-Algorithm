@@ -1,27 +1,23 @@
-import random
+def partition(arr, low, high):
+    pivot = arr[high]  # Pivot element
+    i = low - 1  # Index of smaller element
 
-# Function to generate a list of random numbers
-def generate_random_list(size):
-    return [random.randint(0, 10) for _ in range(size)]
+    for j in range(low, high):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
 
-# Function to perform quicksort
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
-    pivot = arr[-1]
-    left = [x for x in arr[:-1] if x < pivot]
-    middle = [x for x in arr[:-1] if x == pivot]
-    right = [x for x in arr[:-1] if x > pivot]
-    return quicksort(left) + middle + quicksort(right)
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
 
-# Generate a list of random numbers
-random_list = generate_random_list(10)
+def quicksort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
 
-# Print the original list
-print("Original List: ", random_list)
+        quicksort(arr, low, pi - 1)  # Recursively sort elements before partition
+        quicksort(arr, pi + 1, high)  # Recursively sort elements after partition
 
-# Perform quicksort
-sorted_list = quicksort(random_list)
-
-# Print the sorted list
-print("Sorted List: ", sorted_list)
+# Example usage
+arr = [2, 9, 8, 1, 6, 5, 4, 3, 7]
+quicksort(arr, 0, len(arr) - 1)
+print("Sorted array:", arr)

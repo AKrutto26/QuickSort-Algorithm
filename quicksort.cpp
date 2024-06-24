@@ -1,73 +1,41 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-
+#include <vector>
 using namespace std;
 
-// Function to generate a list of random numbers
-void generateRandomList(int arr[], int size) {
-    srand(time(0));
-    for (int i = 0; i < size; i++) {
-        arr[i] = rand() % 11;
-    }
-}
+// Function to partition the array using the last element as the pivot
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high]; // Pivot element
+    int i = low - 1; // Index of smaller element
 
-// Function to swap elements
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-// Function to partition the array
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j <= high - 1; j++) {
+    for (int j = low; j < high; j++) {
         if (arr[j] < pivot) {
             i++;
-            swap(&arr[i], &arr[j]);
+            swap(arr[i], arr[j]);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
+    swap(arr[i + 1], arr[high]);
     return i + 1;
 }
 
-// Function to perform quicksort
-void quickSort(int arr[], int low, int high) {
+// QuickSort function
+void quickSort(vector<int>& arr, int low, int high) {
     if (low < high) {
-        int pivotIndex = partition(arr, low, high);
-        quickSort(arr, low, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, high);
-    }
-}
+        int pi = partition(arr, low, high);
 
-// Function to print the array
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << " ";
+        quickSort(arr, low, pi - 1); // Recursively sort elements before partition
+        quickSort(arr, pi + 1, high); // Recursively sort elements after partition
     }
-    cout << endl;
 }
 
 int main() {
-    int size = 10;
-    int arr[size];
-
-    // Generate a list of random numbers
-    generateRandomList(arr, size);
-
-    // Print the original list
-    cout << "Original List: ";
-    printArray(arr, size);
-
-    // Perform quicksort
-    quickSort(arr, 0, size - 1);
-
-    // Print the sorted list
-    cout << "Sorted List: ";
-    printArray(arr, size);
-
+    vector<int> arr = {2, 9, 8, 1, 6, 5, 4, 3, 7};
+    int n = arr.size();
+    quickSort(arr, 0, n - 1);
+    
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+    
     return 0;
 }
